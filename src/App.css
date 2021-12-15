@@ -1,0 +1,28 @@
+.App {
+  margin-top: 20px;
+  margin-left: 20px;
+  /* height: 100%; */
+  /* width: 100%; */
+  /* font-family: 'Zen Kaku Gothic Antique', sans-serif; */
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+  align-items: center;
+}
+
+.text{
+  margin-right: 20px;
+  width: 600px;
+  height: 300px;
+  overflow: auto;
+  background-color: white;
+  border: 1px solid grey;
+}
+
+button{
+  margin: 10px;
+}
+
+input{
+  margin: 10px;
+}
