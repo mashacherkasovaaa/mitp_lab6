@@ -7,11 +7,13 @@ function App() {
   const [cursor, setCursor] = useState(text.length);
   const textRef = useRef(null);
 
+  const onTextClick = element => {
+    element.current.focus();
+  };
+  // console.log(cursor, "cursor");
+
   const onKeyboardClick = e => {
     switch (e) {
-      case "Enter": {
-        break;
-      }
       case "ArrowLeft": {
         cursor > 0 && setCursor(prev => prev - 1);
         break;
@@ -30,32 +32,8 @@ function App() {
         text.length - cursor >= 70 && setCursor(prev => prev + 70);
         break;
       }
-      case "NumLock": {
-        break;
-      }
-      case "Shift": {
-        break;
-      }
-      case "Control": {
-        break;
-      }
-      case "Tab": {
-        break;
-      }
-      case "CapsLock": {
-        break;
-      }
-      case "Escape": {
-        break;
-      }
-      case "Home": {
-        setCursor(0);
-        break;
-      }
-      case "End": {
-        setCursor(text.length);
-        break;
-      }
+      case "Home": {setCursor(0);break;}
+      case "End": {setCursor(text.length);break;}
       case "Backspace": {
         cursor > 0 && setCursor(prev => prev - 1);
         setText([...text.slice(0, cursor - 1), ...text.slice(cursor)]);
@@ -76,28 +54,24 @@ function App() {
         break;
       }
     }
-
-    console.log(cursor, text, e);
+    //console.log(cursor, text, e);
   };
-  const onTextClick = element => {
-    element.current.focus();
-  };
-  console.log(cursor, "cursor");
 
   function saveToPC(str) {
     let blob = new Blob([str], { type: "text/plain" });
     let link = document.createElement("a");
-    link.setAttribute("href", URL.createObjectURL(blob));
-    link.setAttribute("download", Date.now() + "");
+    link.href = URL.createObjectURL(blob);
+    link.download =  Date.now() + "";
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
   }
 
-  function uploadImage() {
+  function UploadFile() {
     let file = document.getElementById("uploader").files[0];
     let reader = new FileReader();
     reader.readAsText(file);
     reader.onload = function() {
-      console.log(reader.result, reader.result.split(""));
       setText(reader.result.split(""));
       setCursor(reader.result.split("").length);
     };
@@ -138,7 +112,7 @@ function App() {
         ))}
       </div>
       <button onClick={() => saveToPC(text.join(""))}>Сохранить</button>
-      <input onChange={() => uploadImage()} type={"file"} id={"uploader"} />
+      <input onChange={() => UploadFile()} type={"file"} id={"uploader"} />
     </div>
   );
 }
